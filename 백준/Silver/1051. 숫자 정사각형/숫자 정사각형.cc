@@ -1,7 +1,7 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-int n, m, s, c=0;
+int n, m, s, c=0, maxValue=0;
 vector<vector<char>> v;       
 vector<int> area;
 
@@ -20,14 +20,14 @@ int main(){
 				int st = v[i][j];
 				if(st == v[i][j+c] && st == v[i+c][j] && st == v[i+c][j+c]){
 					s=(c+1)*(c+1);
-					area.push_back(s);
+					maxValue = max(maxValue, s);
 				}
 			}
 		}
 		c+=1;		
 	}
 	
-	cout << area.back();
+	cout << maxValue;
 	
 	return 0;
 }
