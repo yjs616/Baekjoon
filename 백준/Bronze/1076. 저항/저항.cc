@@ -1,45 +1,39 @@
-#include <bits/stdc++.h>
+#include <iostream>
+#include <cmath>
+
 using namespace std;
-typedef long long ll;
 
-string s1, s2, s3;
-int v, mul;
-ll total;
+int ohm[3];
 
-void value(string s){
-	if(s == "black"){
-		v=0; mul=1;
-	}else if(s== "brown"){
-		v=1; mul=10;
-	}else if( s=="red"){
-		v=2; mul=100;
-	}else if( s== "orange"){
-		v=3; mul= 1000;
-	}else if( s== "yellow"){
-		v=4; mul= 10000;
-	}else if(s== "green"){
-		v=5; mul= 100000;
-	}else if(s== "blue"){
-		v=6; mul= 1000000;
-	}else if(s== "violet"){
-		v=7; mul= 10000000;
-	}else if(s== "grey"){
-		v=8; mul= 100000000;
-	}else if(s=="white"){
-		v=9; mul= 1000000000;
+int main() {
+	string input[3];
+	string color[10] = {"black", "brown", "red", "orange", "yellow", "green", "blue", "violet", "grey", "white"};
+	
+	
+	for(int i=0; i<3; i++){
+		cin >> input[i];
 	}
-}
-
-int main(){
-	cin >> s1 >> s2 >> s3;
-	value(s1);
-	total = v;
-	value(s2);
-	total= total*10 + v;
-	value(s3);
-	total *= mul;
-		
-	cout << total;
-		
+	
+	for(int i=0; i<3; i++){
+		for(int j=0; j<10; j++){
+			if(input[i] == color[j]) {
+				ohm[i] = j;
+				break;
+			}
+		}		
+	}
+	
+	int num = ohm[0]*10 + ohm[1];
+	
+	if(num == 0) {
+		cout << "0\n";
+		return 0;
+	} else {
+		cout << num;
+		for(int i=0; i<ohm[2]; i++){
+			cout << "0";
+		}
+		cout << "\n";
+	}	
 	return 0;
-} 
+}
