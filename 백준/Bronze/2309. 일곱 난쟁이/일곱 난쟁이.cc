@@ -6,9 +6,7 @@ vector<int> height(9), h;
 //한줄에 대한거 
 bool print(vector<int>& h){
 	sum =0;
-	for(int i: h) {
-		sum += height[i];
-	}
+	for(int i: h) sum += height[i];
 	if(sum == 100){
 		vector<int> newheight;
 		for(int i: h) newheight.push_back(height[i]);
