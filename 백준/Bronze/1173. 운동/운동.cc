@@ -12,18 +12,18 @@ int main(){
 	}
 	
 	while(exeCnt < N){
-		if(x+T <=M && x-R<m){
+		if(x+T <= M){
 			x+=T;
 			exeCnt++;
 			totalTime++;
-		}else if(x+T<=M && x-R>= m){
-			x+=T;
-			exeCnt++;
-			totalTime++;
-		}else if(x+T>M && x-R<m){
+			continue;
+			
+		}
+		//x+T >M인 경우 
+		if(x-R<m){
 			x=m;
 			totalTime++;
-		}else if(x+T>M && x-R>=m){
+		}else{
 			x-=R;
 			totalTime++;
 		}
