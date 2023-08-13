@@ -1,19 +1,11 @@
 #include <bits/stdc++.h>
 using namespace std;
-
-string str;
-int ret=1;
+string s, tmp;
 int main(){
-	cin >> str;
-	for(int i=0; i< str.size()/2; i++){	
-		if(str[i] != str[str.size()-1-i]){
-			ret = 0;
-			break;
-		}else{
-			ret =1;
-		}
-	}
-	cout << ret;
-	
+	cin >> s; 
+	tmp = s;
+	reverse(tmp.begin(), tmp.end());
+	if(tmp == s) cout << "1" << "\n";
+	else cout << "0" << "\n";	
 	return 0;
 }
