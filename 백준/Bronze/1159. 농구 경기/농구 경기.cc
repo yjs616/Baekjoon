@@ -1,43 +1,30 @@
 #include <bits/stdc++.h>
 using namespace std;
-
-int num;
+int n;
+int eng[30];   //빈배열 
 string name;
-vector<string> names;
-vector<char> memberlist;
-map<char, int> mp;
-bool isValue = false;
-
+bool check = true;
 int main(){
-	cin >> num;
-	for(int i=0; i<num; i++){
-		cin >> name;
-		names.push_back(name);
+	cin >> n;
+	
+	//eng 배열 채우기 
+	for(int i=0; i<n; i++){ 
+	    cin >> name;
+	    int j = name[0]-'a';
+	    eng[j]++;
 	}
 	
-	for(int i=0; i<num; i++){
-		mp[names[i][0]]++;
-	}
-	
-	for(auto it : mp){
-		if(it.second >= 5){
-			memberlist.push_back(it.first);
-			isValue = true;
+	for(int i=0; i<26; i++){
+		if(eng[i] >=5){
+			cout << (char)(i +'a');
+			check=false;
 		}
 	}
 	
-	if(isValue){
-		for(char i : memberlist) cout << i;
-	}else{
+	if(check){
 		cout << "PREDAJA";
 	}
 	
-	
-	/*if(memberlist.empty()){
-	    cout << "PREDAJA"; 
-	}else{
-		for(char i : memberlist) cout << i;	
-	}*/
 	
 	return 0;
 }
