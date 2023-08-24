@@ -26,8 +26,8 @@ int main(){
 				name = "I'm Sorry Hansoo";
 				break;
 			}
-			center = it.first;
-			name[name.size()/2] = center;
+			center = name.size()/2;
+			name[center] = it.first;
 		}
 	}		
 	cout << name << "\n";		
