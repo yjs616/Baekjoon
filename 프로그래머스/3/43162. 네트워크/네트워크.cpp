@@ -1,31 +1,58 @@
-#include <string>
+#include <iostream>
 #include <vector>
 
-#define MAX 200+3
 using namespace std;
 
-bool isVisited[MAX];
+class VertexSets {
+public:
+    int parent[203];
+    int nSets;
 
-void DFS(int cur, int n, vector<vector<int>> com){
-    isVisited[cur] = true;
-    
-    for(int i = 0; i < n; i++){
-        // 아직 방문하지 않았고, 연결되어 있는 컴퓨터 번호 일 때
-        if(!isVisited[i] && com[cur][i] == 1){
-            DFS(i, n, com);
+    VertexSets(int n) : nSets(n) {
+        for (int i = 0; i < nSets; i++)
+            parent[i] = -1;
+    }
+
+    bool isRoot(int i) {
+        return parent[i] < 0;
+    }
+
+    int findSet(int v) {
+        while (!isRoot(v)) {
+            v = parent[v];
+        }
+        return v;
+    }
+
+    void unionSets(int s1, int s2) {
+        int root1 = findSet(s1);
+        int root2 = findSet(s2);
+
+        if (root1 != root2) {
+            if (parent[root1] < parent[root2]) {
+                parent[root1] += parent[root2];
+                parent[root2] = root1;
+            } else {
+                parent[root2] += parent[root1];
+                parent[root1] = root2;
+            }
+
+            nSets--;
         }
     }
-}
+};
 
 int solution(int n, vector<vector<int>> computers) {
-    int answer = 0;
-    
-    for(int i = 0; i < n; i++){ // 0번부터 n-1까지
-        if(!isVisited[i]){ // 아직 방문하지 않았다면 
-            // DFS를 통해 연결되어 있는 컴퓨터들을 방문
-            DFS(i, n, computers); 
-            answer++; // 네트워크의 갯수 추가
+    VertexSets v(n);
+
+    for (int i = 0; i < n; i++) {
+        for (int j = 0; j < n; j++) {
+            if (computers[i][j] == 1 && i <= j) {
+                v.unionSets(i, j);
+            }
         }
     }
-    return answer;
+
+    return v.nSets;
 }
+
