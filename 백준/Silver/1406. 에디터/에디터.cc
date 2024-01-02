@@ -13,7 +13,7 @@ int main() {
 
 	stack<char> st;
 
-	for (size_t i = 0; i < s.size(); i++) {
+	for (int i = 0; i < s.size(); i++) {
 		st.push(s[i]);
 	}
 
