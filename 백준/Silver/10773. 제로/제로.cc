@@ -2,34 +2,30 @@
 #include <stack>
 using namespace std;
 
-int k, sum;
 stack<int> st;
+int n, money, sum;
 
 int main() {
 
-	cin >> k;
-	for (int i = 0; i < k; i++) {
-		int num;
-		cin >> num;
+	cin >> n;
 
-		if (num == 0) {
+	for (int i = 0; i < n; i++) {
+		cin >> money;
+		if (money == 0) {
 			st.pop();
 		}
 		else {
-			st.push(num);
+			st.push(money);
 		}
 	}
 
-	if (st.size() == 0) {
-		cout << "0" << "\n";
+	//남아있는 수들의 합 계산
+	while (!st.empty()) {
+		sum += st.top();
+		st.pop();
 	}
-	else {
-		while (!st.empty()) {
-			sum += st.top();
-			st.pop();
-		}
-		cout << sum << "\n";
-	}
-	
+
+	cout << sum;
+
 	return 0;
 }
