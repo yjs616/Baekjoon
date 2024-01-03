@@ -1,51 +1,54 @@
 #include <iostream>
-#include <string>
 #include <stack>
 #include <vector>
 using namespace std;
 
-int n, a=1;
-int ret[100003];
-vector<char> answer;
-string s;
 stack<int> st;
+vector<char> ret;
+int n, num;
+bool isBool = true;
 
 int main() {
 	cin >> n;
 
-	for (int i = 0; i < n; i++) {
-		cin >> ret[i];
-	}
+	int j = 1;
+	for (int i = 0; i < n; i++) {      //횟수
+		cin >> num;
 
-	for (int i = 0; i < n; i++) {
-		if (!st.empty() && st.top() > ret[i]) {
-			s = "NO";
-			break;
+		while (isBool) { // 5
+			if (st.empty()) {
+				st.push(j);
+				ret.push_back('+');
+				j++;
+			}
+			else {
+				if (st.top() == num) {
+					st.pop();
+					ret.push_back('-');
+					break;
+				}
+				else {
+					if (st.top() > num) {
+						isBool = false;
+					}
+					else {
+						st.push(j);
+						j++;
+						ret.push_back('+');
+					}
+				}
+			}
 		}
-		 do {
-			if (a <= ret[i]) {
-				st.push(a);
-				//cout << "push : " << a << "\n";
-				answer.push_back('+');
-				a++;
-			}
-			if (!st.empty() && st.top() == ret[i]) {
-				//cout << "pop : " << st.top() << "\n";
-				answer.push_back('-');
-				st.pop();
-				break;
-			}
-
-		 } while (!st.empty());
-		 
+		
 	}
-	if (s != "NO") {
-		for (char c : answer) {
+
+	if (isBool) {
+		for (char c : ret) {
 			cout << c << "\n";
 		}
 	}
 	else {
-		cout << s << "\n";
+		cout << "NO";
 	}
 
 	return 0;
