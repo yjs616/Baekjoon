@@ -1,6 +1,7 @@
 #include <iostream>
 #include <queue>
 #include <tuple>
+#include <string.h>
 using namespace std;
 
 int field[53][53], visited[53][53], y, x, ny, nx;
@@ -41,12 +42,8 @@ int main() {
 
 		cin >> m >> n >> k;        //m:가로길이, n:세로길이
 
-		for (int i = 0; i < n; i++) {         //배열 리셋
-			for (int j = 0; j < m; j++) {
-				field[i][j] = 0;
-				visited[i][j] = 0;
-			}
-		}
+		memset(field, 0, sizeof(field));
+		memset(visited, 0, sizeof(visited));
  
 		for (int i = 0; i < k; i++) {
 			cin >> x >> y;
