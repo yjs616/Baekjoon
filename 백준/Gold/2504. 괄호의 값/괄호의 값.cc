@@ -21,13 +21,13 @@ int main(){
             st.push(s[i]);
             tmp*=3;
         }else if(s[i]==')'){
-            if(st.empty()){
+            if(st.empty()){ //비어있을 때 그냥 break하면 안됨  ret이 0이 아닐 수도 있다.
                 ret = 0;
                 break;
             }
             else{
                 if(st.top()=='('){
-                st.pop();
+                    st.pop();
                 if(pre !='('){
                     tmp/=2;
                 }else{
@@ -43,7 +43,7 @@ int main(){
             }
             else{
                 if(st.top()=='['){
-                st.pop();
+                    st.pop();
                 if(pre != '['){
                     tmp /=3;
                 }else{
