@@ -14,7 +14,7 @@ int main(){
         }
         
         int arr[23],cnt=0;
-        bool isAEIOU = false, isTree=false, samePre=false;
+        bool isAEIOU = false, isThree=false, samePre=false;
         char pre=' ';
 
         for(int i=0; i<s.size(); i++){
@@ -45,7 +45,7 @@ int main(){
 
             //cnt 3 되면 2번 기준 불충족
             if(cnt ==3){
-                isTree=true;
+                isThree=true;
                 break;
             }
             pre = s[i];
@@ -56,7 +56,7 @@ int main(){
         //cout << "isTree : " << isTree << "\n";
         //cout << "samePre : " << samePre << "\n";
 
-        if(!isAEIOU || isTree || samePre){ //승인 불가
+        if(!isAEIOU || isThree || samePre){ //승인 불가
             cout << "<" << s << ">" << " is not acceptable.\n";
         }else{
             cout << "<" << s << ">" << " is acceptable.\n";
