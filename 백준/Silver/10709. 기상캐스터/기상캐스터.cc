@@ -28,7 +28,7 @@ int main(){
                     nx = j+1;
                     if(nx > w || arr[i][nx]=='c') break;
                     visited[i][nx] = visited[i][j]+1;
-                    ++j;
+                    j++;
                 }
             }
         }
