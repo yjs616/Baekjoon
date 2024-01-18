@@ -5,9 +5,6 @@ using namespace std;
 int h, w, visited[103][103],nx;
 char arr[103][103];
 
-void go(){
-
-}
 
 int main(){
 
