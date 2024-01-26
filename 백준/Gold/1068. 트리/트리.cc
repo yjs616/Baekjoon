@@ -1,55 +1,52 @@
 #include <iostream>
 #include <vector>
-
 using namespace std;
 
-int n, cntLeaf, root;
-vector<bool> visited;
-vector<vector<int>> tree;
-int deleteNode;
+int n, root, del, visited[53], cnt;
+vector<int> v[53];
 
-void DFS(int n) {
-    visited[n] = true;
-    bool isLeaf = true;
+void dfs(int n){
+    visited[n]= 1;
+    bool isLeaf = true;     //가지마다 체크해야하니까
 
-    for (int i : tree[n]) {
-        if (!visited[i] && i != deleteNode) {
+    for(int i : v[n]){
+        if(!visited[i] && i != del){
+            //방문하지 않았고 현재 i가 del이랑 다르면 dfs를 계속 호출해서 탐색해야 함
             isLeaf = false;
-            DFS(i);
+            dfs(i);
         }
     }
 
-    if (isLeaf) {
-        cntLeaf++;
+    if(isLeaf){
+        cnt++;
     }
+
 }
 
-int main() {
+int main(){
+
     cin >> n;
 
-    visited.resize(n, false);
-    tree.resize(n);
-
-    for (int i = 0; i < n; i++) {
-        int node;
-        cin >> node;
-        if (node == -1) { // 루트
+    int num;
+    for(int i=0; i<n; i++){
+        cin >> num;
+        
+        if(num == -1){
             root = i;
-        }
-        else {
-            tree[node].push_back(i);
+        }else{
+            v[num].push_back(i);
         }
     }
 
-    cin >> deleteNode;
+    cin >> del;
 
-    if (deleteNode == root) {
-        cout << "0" << "\n";
+    if(del == root){
+        cout << 0 << "\n";
+    }else{
+        dfs(root);
+        cout << cnt << "\n";
     }
-    else {
-        DFS(root);
-        cout << cntLeaf << "\n";
-    }
+
 
     return 0;
 }
