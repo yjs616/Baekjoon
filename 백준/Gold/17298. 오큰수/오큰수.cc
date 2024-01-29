@@ -1,37 +1,46 @@
 #include <iostream>
-#include <string>
 #include <stack>
 #include <vector>
 using namespace std;
 
 int n;
-int a[1000003], ans[1000003];
 stack<int> st;
+vector<int> arr, ans;
 
-int main() {
-	
-	cin >> n;
+int main(){
 
-	for (int i = 0; i < n; i++) {
-		cin >> a[i];
-	}
+    int n;
+    cin >> n;
 
-	for (int i = 0; i < n; i++) {
-		while (!st.empty() && a[st.top()] < a[i]) {
-			ans[st.top()] = a[i];
-			st.pop();
-		}
-		st.push(i);
-	}
-	while (!st.empty()) {
-		ans[st.top()] = -1;
-		st.pop();
-	}
+    arr.resize(n);
+    ans.resize(n);
 
-	for (int i = 0; i < n; i++) {
-		cout << ans[i] << " ";
-	}
-	
 
-	return 0;
+    //배열에 넣기
+    for(int i=0; i<n; i++){
+        cin >> arr[i];
+    }
+
+    for(int i=0; i<n; i++){
+        if(st.empty()){
+            st.push(i);
+        }else{
+            while(!st.empty() && (arr[st.top()] < arr[i])){
+                ans[st.top()] = arr[i];
+                st.pop();
+            }
+            st.push(i);
+        }
+    }
+
+    //스택에 남아있는 인덱스들 처리
+    while(!st.empty()){
+        ans[st.top()]= -1;
+        st.pop();
+    }
+
+    for(int i=0; i<n; i++){
+        cout << ans[i] << " ";
+    }
+    return 0;
 }
