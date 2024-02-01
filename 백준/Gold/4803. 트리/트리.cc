@@ -12,8 +12,11 @@ void dfs(int cur, int parent) {
     for (int next : adj[cur]) {
         if (!visited[next]) {
             dfs(next, cur);
-        } else if (next != parent) {
-            isTree = false;
+        } else{
+            if(next != parent){
+                isTree = false;
+                return;
+            }
         }
     }
 }
@@ -47,7 +50,7 @@ int main() {
 
         int treeCnt = 0;
 
-        // 모든 정점에 대해 DFS 수행
+        //모든 정점 dfs
         for (int i = 1; i <= n; i++) {
             if (!visited[i]) {
                 dfs(i, -1);
@@ -58,7 +61,7 @@ int main() {
             }
         }
 
-        // 결과 출력
+        // 결과 
         cout << "Case " << caseCnt << ": ";
         if (treeCnt == 0) {
             cout << "No trees." << "\n";
