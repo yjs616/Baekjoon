@@ -5,11 +5,9 @@ using namespace std;
 
 char a[301][301];
 int n, m, x1, y1, x2, y2;
-typedef pair<int, int> pii;
 int visited[301][301];
 const int dy[4] = {-1, 0, 1, 0};
 const int dx[4] = {0, 1, 0, -1};
-int ret;
 queue<int> q;
 
 int main() {
@@ -44,6 +42,6 @@ int main() {
         }
         q = temp;
     }
-    cout << visited[y2][x2] << endl;
+    cout << visited[y2][x2] << "\n";
     return 0;
 }
