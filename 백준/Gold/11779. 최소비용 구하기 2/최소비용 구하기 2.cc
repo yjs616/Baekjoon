@@ -20,7 +20,7 @@ void go(int start) {
 
     while (!pq.empty()) {
         int x = pq.top().second;
-        int xcost = -pq.top().first;
+        int xcost = pq.top().first;
         pq.pop();
 
         if(xcost > dp[x]) continue;
@@ -31,7 +31,7 @@ void go(int start) {
 
             if (dp[nx] > nxcost) {
                 dp[nx] = nxcost;
-                pq.push({-nxcost, nx});
+                pq.push({nxcost, nx});
                 pre[nx] = x;
             }
       
