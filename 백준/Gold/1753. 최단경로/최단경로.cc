@@ -2,7 +2,7 @@
 #include <tuple>
 #include <vector>
 #include <queue>
-#include <cstring>
+#include <string.h>
 using namespace std;
 
 //우선순위 큐로 접근
