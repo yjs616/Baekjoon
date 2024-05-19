@@ -1,24 +1,33 @@
-#include <bits/stdc++.h>
+#include <iostream>
+#include <map>
+#include <vector>
 using namespace std;
-int gabot[15003], n, m, cnt;
+
+int n, m, cnt;
+map<int, int> mp;
+vector<int> keys;
+
 int main(){
-	cin >> n >> m;
-	
-	//갑옷 번호 넣기 
-	for(int i=0; i<n; i++){
-		cin >> gabot[i];
-	}
-	
-	for(int i=0; i<n; i++){
-		for(int j = i+1; j<n; j++){
-			int sum = gabot[i] + gabot[j];
-			
-			if(sum == m){
-				cnt++;
-			}
-		}
-	}	
-	cout << cnt;
-		
-	return 0;
+
+    cin >> n >> m;
+
+    for(int i=0; i<n; i++){
+        int a;
+        cin >> a;
+        mp[a]++; 
+        keys.push_back(a);
+    }
+    
+
+    for(int key : keys){
+        if(mp.find(key) != mp.end() && mp.find(m-key) != mp.end()){
+            if(key != m-key || mp[key] >1){
+                cnt++;
+                mp.erase(key);
+                mp.erase(m-key);
+            }
+        }
+    }
+    cout << cnt << "\n";
+    return 0;
 }
