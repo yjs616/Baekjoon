@@ -2,74 +2,80 @@
 #include <queue>
 #include <tuple>
 #include <string.h>
+
 using namespace std;
 
-int map[103][103],visited[103][103], n, y, x, ny, nx;
-int height=1, maxH=1, maxSafe=1;
+//비가 내렸을 때 물에 잠기지 않은 안전 영역 최대로 몇개 만들어지는지
+//일정 높이 이하는 모두 잠긴다. 
 
-int dy[] = { -1, 0, 1, 0 };
-int dx[] = { 0, 1, 0, -1 };
+//안전영역 connected component
+//잠기는 부분은 다 0과 같은 의미, 안전지대는 1과 같은 의미
 
-void bfs(int y, int x) {
+//안전 영역의 최대 갯수 구하기
+//내가 안전 영역의 높이를 설정해야 한다.
 
-	visited[y][x] = 1;
-	queue<pair<int, int>> q;
+int arr[103][103], visited[103][103];
+int n, y, x, ny, nx, ret=1;
+int dy[] = {-1, 0, 1, 0};
+int dx[] = {0, 1, 0, -1};
 
-	q.push({ y, x });
+void bfs(int y, int x, int h){
+    visited[y][x] =1;
 
-	while (q.size()) {
-		tie(y, x) = q.front(); q.pop();
+    queue<pair<int, int>> q;
+    q.push({y, x});
+    
+    while(!q.empty()){
+        tie(y, x) = q.front(); q.pop();
 
-		for (int i = 0; i < 4; i++) {
-			ny = y + dy[i];
-			nx = x + dx[i];
+        for(int i=0; i<4; i++){
+            ny = y + dy[i];
+            nx = x + dx[i];
 
-			if (ny < 0 || ny >= n || nx < 0 || nx >= n || map[ny][nx] <= height) continue;
-			if (!visited[ny][nx]) {
-				//cout << "안전지대 ny,nx는 - ny :  " << ny << " nx : " << nx << "\n";
-				visited[ny][nx] = 1;
-				q.push({ny, nx});
-			}
-		}
-	}
+            if(ny < 0 || ny >=n || nx<0 ||nx>=n || arr[ny][nx]<=h) continue;
+            if(!visited[ny][nx]){
+                visited[ny][nx] = visited[y][x] + 1;
+                q.push({ny, nx});
+            }
+        
+        }
+    }
 }
 
-int main() {
+int main(){
+    
+    cin >> n;
 
-	cin >> n;
+    int max_hei = 1;
+    for(int i=0; i<n; i++){
+        for(int j=0; j<n; j++){
+            cin >> arr[i][j];
+            max_hei = max(max_hei, arr[i][j]);
+        }
+    }
+    
+    //높이는 1이상 100이하 정수
+    //max_hei는 최대 높이임
 
-	for (int i = 0; i < n; i++) {
-		for (int j = 0; j < n; j++) {
-			cin >> map[i][j];
-		}
-	}
-	
-	for (int i = 0; i < n; i++) {
-		for (int j = 0; j < n; j++) {
-			if (maxH < map[i][j]) maxH = map[i][j];         //높이 N 최댓값 찾기
-		}
-	}
+    for(int h=1; h <= max_hei; h++){
+        int cnt = 0;
 
-	while(height<= maxH){
+        //visited 초기화
+        memset(visited, 0, sizeof(visited));
 
-		int cnt = 0;
-		memset(visited, 0, sizeof(visited));
+        for(int i=0; i<n; i++){
+            for(int j=0; j<n; j++){
+                if(arr[i][j]>h && !visited[i][j]){
+                    bfs(i, j, h);
+                    cnt++;
+                }
+            }
+        }
 
-		for (int i = 0; i < n; i++) {
-			for (int j = 0; j < n; j++) {
-				if (map[i][j] > height && !visited[i][j]) {
-					bfs(i, j);
-					cnt++;
-				}
-			}
-		}
-		height++;              //height maxH까지 하나씩 증가
+        ret = max(ret, cnt);
+    }
+    
+    cout << ret << "\n";
 
-		if (cnt > maxSafe) maxSafe = cnt;	
-
-	}
-
-	cout << maxSafe;
-
-	return 0;
+    return 0;
 }
