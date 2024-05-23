@@ -46,7 +46,7 @@ int main(){
     
     cin >> n;
 
-    int max_hei = 1;
+    int max_hei = 0;
     for(int i=0; i<n; i++){
         for(int j=0; j<n; j++){
             cin >> arr[i][j];
