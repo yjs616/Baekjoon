@@ -1,70 +1,87 @@
 #include <iostream>
+#include <tuple>
+#include <string.h>
 #include <queue>
 #include <vector>
 #include <algorithm>
 using namespace std;
 
-int n, m, k, map[103][103], visited[103][103], y, x, ny, nx;
-int dy[] = { -1, 0, 1, 0 };
-int dx[] = { 0, 1, 0, -1 };
-int sx, sy, ex, ey;
-int zone, zoneS;
-vector<int> v;
 
-void dfs(int y, int x) {
-	visited[y][x] = 1;
-	zoneS++;
+//m : y
+//n : x
+//k개의 직사각형
+//왼쪽 아래 x, y // 오른쪽 위 x, y
 
-	for (int i = 0; i < 4; i++) {
-		ny = y + dy[i];
-		nx = x + dx[i];
+//ret이 0일리가 없다 ret=1로 초기화하고 시작하기
 
-		if (ny < 0 || ny >= m || nx < 0 || nx >= n || map[ny][nx] == 0) continue;
-		if (!visited[ny][nx]) {
-			dfs(ny, nx);
-		}
-	}
+int m, n, k;
+int arr[104][104], visited[104][104];
+int sx, sy, ex, ey, connected_c;
+int ny, nx, y, x;
+int dy[] = {-1, 0, 1, 0};
+int dx[] = {0, 1, 0, -1};
+vector<int> s;   //넓이 저장하는 백터
+
+void bfs(int y, int x){
+    int cnt = 0;
+    visited[y][x] = 1;
+
+    queue<pair<int, int>> q;
+    q.push({y, x});
+
+    while(!q.empty()){
+        tie(y, x) = q.front(); q.pop();
+        cnt++;
+
+        for(int i=0; i<4; i++){
+            ny = y + dy[i];
+            nx = x + dx[i];
+
+            if(ny<0 || ny >=m || nx <0 || nx>=n || !arr[ny][nx]) continue;
+            if(!visited[ny][nx]){
+                visited[ny][nx] =1;
+                q.push({ny, nx});
+            }   
+        }
+
+    }
+    s.push_back(cnt);
+
 }
 
-int main() {
+int main(){
 
-	cin >> m >> n >> k;
-	
-	for (int i = 0; i < m; i++) {
-		for (int j = 0; j < n; j++) {
-			map[i][j] = 1;
-		}
-	}
+    cin >> m >> n >> k;
 
-	for (int a = 0; a < k; a++) {    //k 수만큼
-		cin >> sx >> sy >> ex >> ey; 
-		for (int i = m-ey; i < m-sy; i++) {               //y
-			for (int j = sx; j < ex; j++) {           //x
-				map[i][j] = 0;
-			}
-		}
-	}
+    fill(&arr[0][0], &arr[0][0] + 104*104, 1);
 
-	//bfs or dfs 탐색
-	for (int i = 0; i < m; i++) {
-		for (int j = 0; j < n; j++) {
-			if (map[i][j] != 0 && !visited[i][j]) {
-				dfs(i, j);
-				//넣어
-				//cout << "zone의 넓이 : " << zoneS << "\n";
-				v.push_back(zoneS);  //zone 넓이 구한거 넣어
-				zoneS = 0;         //그리고 zone 넓이 초기화
-				zone++;
-			}
-		}
-	}
+    for(int i=0; i<k; i++){
+        cin >> sx >> sy >> ex >> ey;
 
-	sort(v.begin(), v.end());  //넓이 구한거 오름차순
+        //해당 부분은 0으로 칠해버리기
+        for(int a=sy; a<ey; a++){
+            for(int b= sx; b<ex; b++){
+                arr[a][b] = 0;
+            }
+        }
+    }
 
-	//cout << "zone의 수는  : " << zone << "\n";
-	cout << zone << "\n";
-	for (int i : v) {
-		cout << i << " ";
-	}
-	return 0;
+    for(int i=0; i<m; i++){
+        for(int j=0; j<n; j++){
+            if(arr[i][j] && !visited[i][j]){
+                bfs(i,j);
+                connected_c++;
+            }
+        }
+    }
+
+    //오름차순 정렬
+    sort(s.begin(), s.end());
+
+    cout << connected_c << "\n";
+    for(int i : s){
+        cout << i << " ";
+    }
+
+    return 0;
 }
