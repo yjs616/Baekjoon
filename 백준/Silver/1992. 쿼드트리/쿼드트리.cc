@@ -1,44 +1,49 @@
 #include <iostream>
-#include <string.h>
 using namespace std;
 
-char map[67][67];
 int n;
+char arr[70][70];
 
-string go(int size, int y, int x) {
-	if (size == 1) return string(1, map[y][x]);
-	char std = map[y][x];   //기준
-	string ret = "";        //결과 출력
-
-	for (int i = y; i < y + size; i++) {
-		for (int j = x; j < x + size; j++) {
-			if (std != map[i][j]) {
-				ret += '(';
-				ret += go(size / 2, y, x);    //왼쪽 위
-				ret += go(size / 2, y, x + size/2);  //오른쪽 위
-				ret += go(size / 2, y + size/2, x);   //왼쪽 아래
-				ret += go(size / 2, y + size/2, x + size/2); //오른쪽 아래
-				ret += ')';
-				return ret;
-			}
-		}
-	}
-	return string(1, map[y][x]);       //map[y][x]가 char형이라서 반환형이 string이니까 string으로 만들어줘 return 
+int check(int y, int x, int n){
+    for(int i=y; i< y+n; i++){
+        for(int j=x; j< x+n; j++){
+            if(arr[i][j] != arr[y][x]){
+                return 0;
+            }
+        }
+    }
+    return 1;
 }
 
-int main() {
+void solve(int y, int x, int z){
+    if(check(y, x, z)){    //다 0 or 1인지 확인
+        cout << arr[y][x];   //1 or 0 출력
+        return;
+    }
 
-	cin >> n;
+    //같은 숫자가 아니라면
+    int n = z/2;       //8->4->2
+    cout << "(";
+    for(int i=0; i<2; i++){
+        for(int j=0; j<2; j++){
+            solve(y + i*n, x+ j*n, n);
+        }
+    }
+    cout << ")";
+}
 
-	for (int i = 0; i < n; i++) {
-		for (int j = 0; j < n; j++) {
-			cin >> map[i][j];
-		}
-	}
+int main(){
 
-	cout << go(n, 0, 0);
-	
-	
+    cin >> n;
 
-	return 0;
+    //입력 받기
+    for(int i=0; i<n; i++){
+        for(int j=0; j<n; j++){
+            cin >> arr[i][j];
+        }
+    }
+    
+    solve(0, 0, n);
+
+    return 0;
 }
