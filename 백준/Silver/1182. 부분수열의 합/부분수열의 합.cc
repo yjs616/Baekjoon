@@ -1,34 +1,25 @@
 #include <iostream>
-#include <vector>
 using namespace std;
 
-int n, s, sum=987654321, ret=0;
-vector<int> v;
-int arr[21];
+int n, s, cnt;   //cnt : 경우의 수
+int arr[23];
+int visited[23];
+int sum;
 
-/*void print(){
-    for(int i : v){
-        cout << i << " ";
-    }
-    cout << "\n";
-}*/
+void solve(int idx){
 
-void select(int idx){
     if(sum == s){
-        ret++;
-        //print();
-        //return; //0이 더해질 수도 있으니까 리턴하면 안됨
+        cnt++;
     }
+
+    //종료 조건
     if(idx == n-1) return;
 
     for(int i= idx+1; i<n; i++){
         sum += arr[i];
-        //v.push_back(arr[i]);
-        select(i);
+        solve(i);
+        sum -= arr[i];
 
-        //끝나면
-        sum-=arr[i];
-        //v.pop_back();
     }
 }
 
@@ -36,19 +27,19 @@ int main(){
 
     cin >> n >> s;
 
+    //배열에 숫자 입력하기
     for(int i=0; i<n; i++){
         cin >> arr[i];
     }
 
+    //모든 경우 시작점 잡기
     for(int i=0; i<n; i++){
-        sum = arr[i];
-        //v.push_back(arr[i]);
-        select(i);
-        //v.pop_back();
-        
+        sum = arr[i];     //첫번째꺼 더하고 시작
+        solve(i);
     }
 
-    cout << ret << "\n";
+    cout << cnt << "\n";
+
 
     return 0;
 }
