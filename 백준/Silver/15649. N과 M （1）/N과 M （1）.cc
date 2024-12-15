@@ -24,9 +24,10 @@ void solve(int cur, int cnt){
         return;
     }
 
+    cnt++;
     for(int i=1; i<=n; i++){
         if(visited[i] != 1){
-            solve(i, cnt+1);
+            solve(i, cnt);
             visited[i]=0;
             ans.pop_back();
         }
