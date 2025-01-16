@@ -2,7 +2,7 @@
 #include <cstring>
 using namespace std;
 int cost, n, m1, m2, c; 
-int dp[100004];
+int dp[10004];
 int main(){
     while(1){ 
         scanf("%d %d.%d", &n, &m1, &m2);
